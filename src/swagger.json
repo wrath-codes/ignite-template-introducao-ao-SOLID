@@ -1,0 +1,134 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Intro to SOLID",
+    "description": "This is an API created to apply the basic principles of SOLID",
+    "version": "1.0.0",
+    "contact": {
+      "email": "rvazn.ds@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create a new user",
+        "description": "Create a new user, by default the user is not an administrator",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Example Name Sample",
+                  "email": "examplename@examplecompany.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User already exists."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "List all users",
+        "description": "List all users if the user_id in the header is of an administrator",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "description": "user id to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users Listed"
+          },
+          "400": {
+            "description": "User not found / User is not an administrator"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "List an user profile",
+        "description": "Shows an user profile",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "user id to be passed in the path parameters",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Profile Showed"
+          },
+          "404": {
+            "description": "User not found "
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Turns an user into an administrator user",
+        "description": "Turns an user into an administrator user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "user id to be passed in the path parameters",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Profile Showed"
+          },
+          "404": {
+            "description": "User not found "
+          }
+        }
+      }
+    }
+  }
+}
